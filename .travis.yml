@@ -1,0 +1,19 @@
+dist: xenial
+
+services:
+  - docker
+
+script:
+  - docker run --rm -it -v $PWD:/srv rpmbuild/centos7
+
+deploy:
+  provider: packagecloud
+  repository: $PACKAGECLOUD_REPO
+  username: $PACKAGECLOUD_USER
+  token: $PACKAGECLOUD_TOKEN
+  dist: centos/7
+  package_glob: out/*.rpm
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $TRAVIS_TAG =~ v[0-9].*
