@@ -10,4 +10,5 @@ sha256sum -c sha256sum.txt
 
 ./buildrpm.sh
 
-find $(rpm --eval %{_rpmdir}) -name 'daemontools-*.rpm' | xargs -I@ cp @ .
+mkdir -p out
+find $(rpm --eval %{_rpmdir}) -name 'daemontools-*.rpm' | xargs -I@ cp @ out
