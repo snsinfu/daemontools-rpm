@@ -2,10 +2,15 @@
 DIR_BASE=$(cd ${BASH_SOURCE[0]%/*} && pwd)
 set -e
 
-DIR_RPMBUILD=`rpm --eval %{_topdir}`
-mkdir -p ${DIR_RPMBUILD}/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+builddir=$(rpm --eval %{_builddir})
+rpmdir=$(rpm --eval %{_rpmdir})
+sourcedir=$(rpm --eval %{_sourcedir})
+specdir=$(rpm --eval %{_specdir})
+srcrpmdir=$(rpm --eval %{_srcrpmdir})
 
-cd ${DIR_RPMBUILD}/SOURCES
+mkdir -p ${builddir} ${rpmdir} ${sourcedir} ${specdir} ${srcrpmdir}
+
+cd ${sourcedir}
 cp -af ${DIR_BASE}/daemontools-0.76.tar.gz .
 cp -af ${DIR_BASE}/daemontools-error.h.patch .
 cp -af ${DIR_BASE}/daemontools.conf .
@@ -13,9 +18,9 @@ cp -af ${DIR_BASE}/daemontools.service .
 cp -af ${DIR_BASE}/svscanboot .
 cd - > /dev/null
 
-cd ${DIR_RPMBUILD}/SPECS
+cd ${specdir}
 cp -af ${DIR_BASE}/daemontools.spec .
 cd - > /dev/null
 
-rpmbuild -ba --clean ${DIR_RPMBUILD}/SPECS/daemontools.spec
+rpmbuild -ba --clean ${specdir}/daemontools.spec
 
