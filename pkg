@@ -2,13 +2,20 @@
 set -eu
 cd $(dirname $0)
 
+hostuid=$(stat -c '%u' .)
+hostgid=$(stat -c '%g' .)
+
 disturl=$(rpmspec -P daemontools.spec | awk '/Source0:/ { print $2 }')
 distfile=$(basename ${disturl})
 
-[ -f ${distfile} ] || sudo curl -fsSLO ${disturl}
+if [ ! -f ${distfile} ]; then
+    sudo curl -fsSLO ${disturl}
+    sudo chown ${hostuid}:${hostgid} ${distfile}
+fi
 sha256sum -c sha256sum.txt
 
 ./buildrpm.sh
 
 sudo mkdir -p out
 find $(rpm --eval %{_rpmdir}) -name 'daemontools-*.rpm' | sudo xargs -I@ cp @ out
+sudo chown -R ${hostuid}:${hostgid} out
