@@ -1,5 +1,5 @@
-daemontools-rpm - A tools for building daemontools rpm package
-==============================================================
+daemontools-rpm - Tools for building daemontools rpm package
+============================================================
 
 [![Build Status][travis-badge]][travis-url]
 [![packagecloud][packagecloud-badge]][packagecloud-url]
