@@ -1,6 +1,15 @@
 daemontools-rpm - A tools for building daemontools rpm package
 ==============================================================
 
+Notes on this fork
+------------------
+
+This is a fork of [kteru/daemontools-rpm][kteru] adding support for [dockerized
+rpmbuild][docker-rpmbuild].
+
+[kteru]: https://github.com/kteru/daemontools-rpm
+[docker-rpmbuild]: https://hub.docker.com/r/rpmbuild/centos7/
+
 Supported distribution
 ----------------------
 
