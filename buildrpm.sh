@@ -8,6 +8,14 @@ sourcedir=$(rpm --eval %{_sourcedir})
 specdir=$(rpm --eval %{_specdir})
 srcrpmdir=$(rpm --eval %{_srcrpmdir})
 
+disturl=$(rpmspec -P ${DIR_BASE}/daemontools.spec | awk '/Source0:/ { print $2 }')
+distfile=$(basename ${disturl})
+
+cd ${DIR_BASE}
+[ -f ${distfile} ] || curl -fsSLO ${disturl}
+sha256sum -c sha256sum.txt
+cd - > /dev/null
+
 mkdir -p ${builddir} ${rpmdir} ${sourcedir} ${specdir} ${srcrpmdir}
 
 cd ${sourcedir}
