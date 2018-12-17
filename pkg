@@ -1,5 +1,13 @@
 #!/bin/sh
 set -eu
 cd $(dirname $0)
+
+disturl=$(rpmspec -P daemontools.spec | awk '/Source0:/ { print $2 }')
+distfile=$(basename ${disturl})
+
+[ -f ${distfile} ] || curl -fsSLO ${disturl}
+sha256sum -c sha256sum.txt
+
 ./buildrpm.sh
+
 find $(rpm --eval %{_rpmdir}) -name 'daemontools-*.rpm' | xargs -I@ cp @ .
