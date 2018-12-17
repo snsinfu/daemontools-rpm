@@ -5,10 +5,10 @@ cd $(dirname $0)
 disturl=$(rpmspec -P daemontools.spec | awk '/Source0:/ { print $2 }')
 distfile=$(basename ${disturl})
 
-[ -f ${distfile} ] || curl -fvL -o ${distfile} ${disturl}
+[ -f ${distfile} ] || sudo curl -fsSLO ${disturl}
 sha256sum -c sha256sum.txt
 
 ./buildrpm.sh
 
-mkdir -p out
-find $(rpm --eval %{_rpmdir}) -name 'daemontools-*.rpm' | xargs -I@ cp @ out
+sudo mkdir -p out
+find $(rpm --eval %{_rpmdir}) -name 'daemontools-*.rpm' | sudo xargs -I@ cp @ out
