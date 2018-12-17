@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+cd $(dirname $0)
+./buildrpm.sh
+find $(rpm --eval %{_rpmdir}) -name 'daemontools-*.rpm' | xargs -I@ cp @ .
