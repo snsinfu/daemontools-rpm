@@ -12,7 +12,7 @@ deploy:
   repository: $PACKAGECLOUD_REPO
   username: $PACKAGECLOUD_USER
   token: $PACKAGECLOUD_TOKEN
-  dist: centos/7
+  dist: el/7
   package_glob: out/*.rpm
   skip_cleanup: true
   on:
