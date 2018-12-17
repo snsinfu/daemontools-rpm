@@ -1,14 +1,43 @@
 daemontools-rpm - A tools for building daemontools rpm package
 ==============================================================
 
-Notes on this fork
-------------------
+[![Build Status][travis-badge]][travis-url]
+[![packagecloud][packagecloud-badge]][packagecloud-url]
 
 This is a fork of [kteru/daemontools-rpm][kteru] adding support for [dockerized
-rpmbuild][docker-rpmbuild].
+rpmbuild][docker-rpmbuild]. Pre-built packages for CentOS 7 are available at
+[packagecloud][packagecloud-url].
 
 [kteru]: https://github.com/kteru/daemontools-rpm
 [docker-rpmbuild]: https://hub.docker.com/r/rpmbuild/centos7/
+[travis-badge]: https://travis-ci.org/snsinfu/daemontools-rpm.svg?branch=master
+[travis-url]: https://travis-ci.org/snsinfu/daemontools-rpm
+[packagecloud-badge]: https://img.shields.io/badge/rpm-packagecloud.io-844fec.svg
+[packagecloud-url]: https://packagecloud.io/sinfu/daemontools
+
+To install daemontools package from packagecloud:
+
+```sh
+sudo curl -o /etc/yum.repos.d/daemontools.repo "https://packagecloud.io/install/repositories/sinfu/daemontools/config_file.repo?os=el&dist=7"
+sudo yum update
+sudo yum install daemontools
+```
+
+Or using Ansible:
+
+```yaml
+- yum_repository:
+    name: daemontools
+    description: daemontools
+    baseurl: https://packagecloud.io/sinfu/daemontools/el/$releasever/$basearch
+    gpgkey: https://packagecloud.io/sinfu/daemontools/gpgkey
+    repo_gpgcheck: yes
+    gpgcheck: no
+
+- yum:
+    name: daemontools
+    state: present
+```
 
 Supported distribution
 ----------------------
